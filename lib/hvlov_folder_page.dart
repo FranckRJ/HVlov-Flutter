@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hvlov_flutter/hvlov_config_model.dart';
 import 'package:process_run/cmd_run.dart';
 import 'package:provider/provider.dart';
 
+import 'hvlov_config_model.dart';
 import 'hvlov_folder_model.dart';
 import 'hvlov_folder_widget.dart';
 

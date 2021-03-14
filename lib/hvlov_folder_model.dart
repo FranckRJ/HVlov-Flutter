@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:hvlov_flutter/hvlov_config_model.dart';
 
+import 'hvlov_config_model.dart';
 import 'hvlov_entry.dart';
 
 class HvlovFolderModel extends ChangeNotifier {
