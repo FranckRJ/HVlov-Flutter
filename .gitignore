@@ -49,4 +49,4 @@ app.*.map.json
 /lib/**/*.freezed.dart
 
 # Private files
-/lib/private.conf.dart
+/private.config.json

@@ -2,20 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:hvlov_flutter/hvlov_config_model.dart';
 
 import 'hvlov_entry.dart';
-import 'private.conf.dart' as conf;
 
 class HvlovFolderModel extends ChangeNotifier {
   List<HvlovEntry> _entries = [];
   Future? _updateEntriesFuture;
+  late HvlovConfigModel _configModel;
 
   List<HvlovEntry> get entries => _entries;
 
   Future<List<HvlovEntry>> _getUpdatedEntries(String path) async {
-    http.Response resp = await http.post(Uri.parse(conf.url), body: {
-      "version": conf.version,
-      "password": conf.password,
+    http.Response resp = await http.post(Uri.parse(_configModel.url), body: {
+      "version": _configModel.version.toString(),
+      "password": _configModel.password,
       "path": path
     });
 
@@ -50,5 +51,9 @@ class HvlovFolderModel extends ChangeNotifier {
           _updateEntriesFuture = null;
         });
     }
+  }
+
+  void update(HvlovConfigModel newConfigModel) {
+    _configModel = newConfigModel;
   }
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hvlov_flutter/hvlov_config_model.dart';
 import 'package:process_run/cmd_run.dart';
 import 'package:provider/provider.dart';
 
 import 'hvlov_folder_model.dart';
 import 'hvlov_folder_widget.dart';
-import 'private.conf.dart' as conf;
 
 class HvlovFolderPage extends StatelessWidget {
   const HvlovFolderPage({Key? key}) : super(key: key);
 
-  Future _launchVlc(String path) async {
+  Future _launchVlc(String baseUrl, String path) async {
     final cmd =
-    ProcessCmd(r"C:\Program Files\VideoLAN\VLC\vlc.exe", [conf.url + path]);
+        ProcessCmd(r"C:\Program Files\VideoLAN\VLC\vlc.exe", [baseUrl + path]);
     await runCmd(cmd);
   }
 
@@ -24,8 +24,11 @@ class HvlovFolderPage extends StatelessWidget {
     final String path =
         ModalRoute.of(context)?.settings.arguments as String? ?? "";
 
-    return ChangeNotifierProvider(
-      create: (context) => HvlovFolderModel()..requestUpdateEntries(path),
+    return ChangeNotifierProxyProvider<HvlovConfigModel, HvlovFolderModel>(
+      update: (context, value, previous) => previous!
+        ..update(value)
+        ..requestUpdateEntries(path),
+      create: (context) => HvlovFolderModel(),
       builder: (context, _) => Scaffold(
         appBar: AppBar(
           title: Text("HVlov" +
@@ -33,7 +36,8 @@ class HvlovFolderPage extends StatelessWidget {
         ),
         body: Center(
           child: HvlovFolderWidget(
-            videoSelectedCallback: _launchVlc,
+            videoSelectedCallback: (path) =>
+                _launchVlc(context.read<HvlovConfigModel>().url, path),
           ),
         ),
       ),
