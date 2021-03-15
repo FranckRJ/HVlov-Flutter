@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'hvlov_config_model.dart';
 import 'hvlov_folder_model.dart';
 import 'hvlov_folder_widget.dart';
+import 'settings_dialog.dart';
 
 class HvlovFolderPage extends StatelessWidget {
   const HvlovFolderPage({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class HvlovFolderPage extends StatelessWidget {
   }
 
   String _formatPathToPrettyPath(String path) {
-    return path.replaceAll('_', ' ').replaceAll('/', ' / ');
+    return path.replaceAll("_", " ").replaceAll("/", " / ");
   }
 
   @override
@@ -33,6 +34,15 @@ class HvlovFolderPage extends StatelessWidget {
         appBar: AppBar(
           title: Text("HVlov" +
               (path.isEmpty ? "" : " : ${_formatPathToPrettyPath(path)}")),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => SettingsDialog(),
+              ),
+            ),
+          ],
         ),
         body: Center(
           child: HvlovFolderWidget(
