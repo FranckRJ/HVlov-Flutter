@@ -25,18 +25,19 @@ class HvlovConfigModel extends ChangeNotifier {
     return _privateConfigFile.existsSync() ? _privateConfigFile : _configFile;
   }
 
-  dynamic _loadJsonConfig() {
-    final configFile = _getConfigFile();
-    return json.decode(configFile.readAsStringSync());
-  }
-
-  void _saveJsonConfig(Object jsonConfig) {
-    final configFile = _getConfigFile();
+  void _createDefaultConfigFile(File configFile) {
+    final jsonConfig = {"url": "", "password": ""};
     configFile.writeAsString(json.encode(jsonConfig));
   }
 
   void _loadConfig() {
-    final jsonConfig = _loadJsonConfig();
+    final configFile = _getConfigFile();
+
+    if (!configFile.existsSync()) {
+      _createDefaultConfigFile(configFile);
+    }
+
+    final jsonConfig = json.decode(configFile.readAsStringSync());
 
     _url = jsonConfig["url"];
     _password = jsonConfig["password"];
@@ -44,11 +45,13 @@ class HvlovConfigModel extends ChangeNotifier {
   }
 
   void saveConfig(String url, String password) {
+    final configFile = _getConfigFile();
+
     _url = url;
     _password = password;
 
     final jsonConfig = {"url": _url, "password": _password};
-    _saveJsonConfig(jsonConfig);
+    configFile.writeAsString(json.encode(jsonConfig));
 
     notifyListeners();
   }
