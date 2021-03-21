@@ -27,7 +27,7 @@ class HvlovConfigModel extends ChangeNotifier {
 
   void _createDefaultConfigFile(File configFile) {
     final jsonConfig = {"url": "", "password": ""};
-    configFile.writeAsString(json.encode(jsonConfig));
+    configFile.writeAsStringSync(json.encode(jsonConfig));
   }
 
   void _loadConfig() {
