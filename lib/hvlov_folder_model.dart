@@ -13,21 +13,8 @@ class HvlovFolderModel extends ChangeNotifier {
 
   List<HvlovEntry> get entries => _entries;
 
-  Future<http.Response> _postFollowRedirect(
-      Uri uri, Map<String, String> body) async {
-    http.Response resp;
-
-    do {
-      resp = await http.post(uri, body: body);
-      uri = Uri.parse(resp.headers["location"] ?? "");
-    } while (resp.statusCode == 301 || resp.statusCode == 302);
-
-    return resp;
-  }
-
   Future<List<HvlovEntry>> _getUpdatedEntries(String path) async {
-    http.Response resp =
-        await _postFollowRedirect(Uri.parse(_configModel.url), {
+    http.Response resp = await http.post(Uri.parse(_configModel.url), body: {
       "version": _configModel.version.toString(),
       "password": _configModel.password,
       "path": path
