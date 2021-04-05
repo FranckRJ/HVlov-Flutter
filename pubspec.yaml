@@ -12,16 +12,16 @@ dependencies:
   flutter:
     sdk: flutter
   provider: 5.0.0
-  http: 0.13.0
-  freezed_annotation: 0.14.0
+  http: 0.13.1
+  freezed_annotation: 0.14.1
   process_run: 0.12.1
   flutter_hooks: 0.16.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  freezed: 0.14.0+1
-  build_runner: 1.11.5
+  freezed: 0.14.1+2
+  build_runner: 1.12.2
 
 flutter:
   uses-material-design: true
