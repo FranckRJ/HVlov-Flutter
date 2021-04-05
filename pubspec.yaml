@@ -16,6 +16,7 @@ dependencies:
   freezed_annotation: 0.14.1
   process_run: 0.12.1
   flutter_hooks: 0.16.0
+  bitsdojo_window: 0.1.0
 
 dev_dependencies:
   flutter_test:
